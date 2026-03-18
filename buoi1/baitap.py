@@ -1,0 +1,15 @@
+f_final = open("btn.txt","w", encoding="utf-8")
+f1 = open("btn_2cd.txt","r", encoding="utf-8")
+f2 = open("btn_2cc.txt","r", encoding="utf-8")
+
+f_final.write("Bánh trôi nước")
+f_final.write("\n")
+f_final.write(f1.read())
+f_final.write("\n")
+f_final.write(f2.read())
+f_final.write("\n")
+f_final.write("Hương")
+
+f1.close()
+f2.close()
+f_final.close()

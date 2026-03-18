@@ -1,0 +1,24 @@
+class Student:
+    def __init__(self, student_id, name, grade):
+        self.student_id = student_id
+        self.name = name
+        self.grade = grade
+
+    def get_student_info(self):
+        print(f"MSSV: {self.student_id} | Tên: {self.name} | Điểm: {self.grade}")
+
+class HonorStudent(Student):
+    def __init__(self, student_id, name, grade, honors_award):
+        super().__init__(student_id, name, grade)
+        self.honors_award = honors_award
+
+    def get_award_info(self):
+        print(f"Giải thưởng danh dự: {self.honors_award}")
+
+print("--- Quản lý Học sinh ---")
+s1 = Student("1", "Huỳnh Huyền Hương", 7.5)
+s1.get_student_info()
+
+hs1 = HonorStudent("2", "Nguyễn abc", 9.5, "Học sinh giỏi Toán")
+hs1.get_student_info()
+hs1.get_award_info()
