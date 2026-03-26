@@ -84,11 +84,15 @@ class quanlySVApp:
         if not dong_chon:
             return
         gia_tri = self.bang_sv.item(dong_chon, 'values')
+        self.lam_moi()
         self.txt_ten.insert(0, gia_tri[1])
         self.txt_tuoi.insert(0, gia_tri[2])
-        self.cb_nganh.insert(0, gia_tri[3])
+        self.cb_nganh.set( gia_tri[3])
 
-    def lam_moi()
+    def lam_moi(self):
+        self.txt_ten.delete(0,tk.END)
+        self.txt_tuoi.delete(0,tk.END)
+        self.cb_nganh.set('')
         
     def hien_thi_du_lieu(self):
         for row in self.bang_sv.get_children():
@@ -119,10 +123,45 @@ class quanlySVApp:
         messagebox.showinfo("Thành công", f"Đã thêm: {ten}")
 
     def sua_sv(self):
-        pass
+        dong_chon = self.bang_sv.focus()
+        if not dong_chon:
+            messagebox.showwarning("Lỗi","Vui lòng chọn dòng để sửa!")
+            return
+        ma_sv = self.bang_sv.item(dong_chon,'values')[0]
+        ten = self.txt_ten.get()
+        tuoi = self.txt_tuoi.get()
+        nganh = self.cb_nganh.get()
+        conn = sqlite3.connect('quanlySV.db')
+        cur = conn.cursor()
+        sql = "UPDATE SinhVien SET ten=?, tuoi=?, nganh=? WHERE id=?"
+        cur.execute(sql, (ten,tuoi,nganh,ma_sv))
+        conn.commit()
+        conn.close()
+
+        self.lam_moi()
+        self.hien_thi_du_lieu()
+        messagebox.showinfo("Thành công","Đã cập nhật thông tin")
 
     def xoa_sv(self):
-        pass
+        dong_chon = self.bang_sv.focus()
+        if not dong_chon:
+            messagebox.showwarning("Lỗi","Vui lòng chọn dòng để xoá!")
+            return
+        if messagebox.askyesno("Xác nhận","Bạn có muốn xoá sinh viên này"):
+
+
+            ma_sv = self.bang_sv.item(dong_chon,'values')[0]
+            
+            conn = sqlite3.connect('quanlySV.db')
+            cur = conn.cursor()
+            sql = "DELETE FROM SinhVien WHERE id=?"
+            cur.execute(sql, (ma_sv))
+            conn.commit()
+            conn.close()
+
+            self.lam_moi()
+            self.hien_thi_du_lieu()
+            messagebox.showinfo("Thành công","Đã xoá sinh viên")
 
     
 
